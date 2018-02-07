@@ -15,9 +15,7 @@ namespace WizzardExtreme.Game
 
         public CardStack DrawCards(int count)
         {
-            var cards = new CardStack();
-            for (int i = 1; i <= count; i++)
-                cards.Add(this[Count - i]);
+            var cards = new CardStack(GetRange(Count - count - 1, count));
             RemoveRange(Count - count - 1, count);
             return cards;
         }

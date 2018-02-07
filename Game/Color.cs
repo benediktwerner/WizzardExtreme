@@ -7,28 +7,26 @@ namespace WizzardExtreme.Game
     [JsonConverter(typeof(ColorConverter))]
     public class Color : IComparable<Color>
     {
-        public static readonly Color Red = new Color(0, "Red", 2, System.Drawing.Color.FromArgb(220,0,0));
-        public static readonly Color Green = new Color(1, "Green", 2, System.Drawing.Color.LimeGreen);
-        public static readonly Color Blue = new Color(2, "Blue", 2, System.Drawing.Color.DeepSkyBlue);
-        public static readonly Color Yellow = new Color(3, "Yellow", 2, System.Drawing.Color.Gold);
-        public static readonly Color Violet = new Color(4, "Violet", 2, System.Drawing.Color.Magenta);
-        public static readonly Color Black = new Color(5, "Black", 3, System.Drawing.Color.Black);
-        public static readonly Color White = new Color(6, "White", 4, System.Drawing.Color.White);
+        public static readonly Color Red = new Color(0, "Red", 2);
+        public static readonly Color Green = new Color(1, "Green", 2);
+        public static readonly Color Blue = new Color(2, "Blue", 2);
+        public static readonly Color Yellow = new Color(3, "Yellow", 2);
+        public static readonly Color Violet = new Color(4, "Violet", 2);
+        public static readonly Color Black = new Color(5, "Black", 3);
+        public static readonly Color White = new Color(6, "White", 4);
 
         public const int Count = 7;
 
         public int Index { get; }
         public string Name { get; }
         public int Points { get; }
-        public System.Drawing.Color DrawColor { get; }
         public bool IsCardColor => Index < 5;
 
-        private Color(int index, string name, int points, System.Drawing.Color drawColor)
+        private Color(int index, string name, int points)
         {
             Index = index;
             Name = name;
             Points = points;
-            DrawColor = drawColor;
         }
 
         public override string ToString()
