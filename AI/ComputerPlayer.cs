@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WizzardExtreme.AI;
 
-namespace WizzardExtreme.Game
+namespace WizzardExtreme.AI
 {
     public class ComputerPlayer : Player
     {
@@ -25,7 +25,7 @@ namespace WizzardExtreme.Game
             return playSelector.SelectTrickToRemove(trickColors);
         }
 
-        public override Card RequestCard(Color baseColor, Card winningCard)
+        public override Card GetCardToPlay(Color? baseColor, Card winningCard)
         {
             return playSelector.RequestCard(baseColor, winningCard);
         }

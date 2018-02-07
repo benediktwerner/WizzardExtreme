@@ -1,17 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
-using WizzardExtreme.Game;
 
 namespace WizzardExtreme.Replay
 {
     public class GameLog
     {
-        public int StartingPlayer { get; set; }
-        public int PlayerCount { get; set; }
-        public Player[] Players { get; set; }
-        public List<Turn> Turns { get; set; }
+        public int StartingPlayer;
+        public int PlayerCount;
+        public Player[] Players;
+        public List<Turn> Turns;
 
         internal static void TestWrite()
         {
@@ -27,7 +27,7 @@ namespace WizzardExtreme.Replay
             };
             GameLog g = new GameLog(2, 3, players);
 
-            g.AddTurn(new Turn(0, 1, Color.Green,
+            g.Turns.Add(new Turn(0, 1, Color.Green,
                     new Card[] {
                         new Card(2, Color.Green),
                         new Card(3, Color.Red)
@@ -37,28 +37,17 @@ namespace WizzardExtreme.Replay
 
         GameLog() { }
 
-        public GameLog(int startingPlayer, int playerCount, Player[] players)
+        public GameLog(int startingPlayer, int playerCount, IEnumerable<Player> players)
         {
             StartingPlayer = startingPlayer;
             PlayerCount = playerCount;
             Turns = new List<Turn>();
-            Players = players;
+            Players = players.ToArray();
         }
 
-        public GameLog(int startingPlayer, int playerCount, Game.Player[] players)
-        {
-            StartingPlayer = startingPlayer;
-            PlayerCount = playerCount;
-            Turns = new List<Turn>();
-            Players = new Player[players.Length];
-            for (int i = 0; i < players.Length; i++)
-                Players[i] = new Player(players[i]);
-        }
-
-        public void AddTurn(Turn turn)
-        {
-            Turns.Add(turn);
-        }
+        public GameLog(int startingPlayer, int playerCount, WizzardExtreme.Player[] players)
+            : this(startingPlayer, playerCount, players.Select(p => new Player(p)))
+        { }
 
         public void SaveLog(string path = null)
         {

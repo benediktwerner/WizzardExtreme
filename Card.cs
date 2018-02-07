@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace WizzardExtreme.Game
+namespace WizzardExtreme
 {
     public class Card : IComparable<Card>
     {
@@ -17,7 +17,7 @@ namespace WizzardExtreme.Game
             Color = color;
         }
 
-        public bool BetterThan(Card winningCard, Color baseColor)
+        public bool BetterThan(Card winningCard)
         {
             return winningCard == null
                     || (IsWizzard && (!winningCard.IsWizzard || winningCard.Number < Number))

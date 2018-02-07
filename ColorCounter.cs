@@ -1,14 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace WizzardExtreme.Game
+namespace WizzardExtreme
 {
     public class ColorCounter
     {
         [JsonProperty]
         private int[] colors;
-        public int this[Color c] {
-            get => colors[c.Index];
-            set => colors[c.Index] = value;
+
+        public int this[Color c]
+        {
+            get => colors[(int)c];
+            set => colors[(int)c] = value;
         }
 
         public ColorCounter(ColorCounter colorCounter) : this()
@@ -19,14 +22,14 @@ namespace WizzardExtreme.Game
         [JsonConstructor]
         public ColorCounter(int[] colors = null)
         {
-            this.colors = colors ?? new int[Color.Count];
+            this.colors = colors ?? new int[ColorHelper.ColorCount];
         }
 
         public int GetPoints()
         {
             int points = 0;
-            foreach (var color in Color.Colors)
-                points += this[color] * color.Points;
+            foreach (var color in ColorHelper.Colors)
+                points += this[color] * color.GetPoints();
             return points;
         }
 
@@ -38,16 +41,16 @@ namespace WizzardExtreme.Game
         public override string ToString()
         {
             string s = "";
-            foreach (var color in Color.Colors)
+            foreach (var color in ColorHelper.Colors)
                 if (Contains(color))
                     s += color + ": " + this[color] + "\n";
             return s;
         }
 
-        public static ColorCounter GetTrickColors()
+        public static ColorCounter GetTrickColorsCounter()
         {
             ColorCounter trickColors = new ColorCounter();
-            foreach (var color in Color.CardColors)
+            foreach (var color in ColorHelper.CardColors)
                 trickColors[color] = 3;
 
             trickColors[Color.Red] = 5;

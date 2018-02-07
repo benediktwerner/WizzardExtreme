@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WizzardExtreme.Game
+namespace WizzardExtreme
 {
-    public class HumanPlayer : Player
+    public class HumanConsolePlayer : Player
     {
-        public HumanPlayer(string name) : base(name) { }
+        public HumanConsolePlayer(string name) : base(name) { }
 
         public override void RequestTakeTricks()
         {
@@ -13,8 +13,8 @@ namespace WizzardExtreme.Game
             Console.WriteLine("Your hand:");
             Console.WriteLine(Hand);
             Console.WriteLine("Choose your tricks (-1 to stop):");
-            foreach (Color color in Color.CardColors)
-                Console.WriteLine(color.Index + ": " + color);
+            foreach (var color in ColorHelper.CardColors)
+                Console.WriteLine((int)color + ": " + color);
             while (true)
             {
                 int input = int.Parse(Console.ReadLine());
@@ -22,7 +22,7 @@ namespace WizzardExtreme.Game
                     return;
                 else if (input >= 0 && input < 5)
                 {
-                    Color color = Color.Colors[input];
+                    Color color = ColorHelper.Colors[input];
                     if (RequestTrick(color))
                         Console.WriteLine("You took a " + color + " trick!");
                     else
@@ -33,7 +33,7 @@ namespace WizzardExtreme.Game
             }
         }
 
-        public override Card RequestCard(Color baseColor, Card winningCard)
+        public override Card GetCardToPlay(Color? baseColor, Card winningCard)
         {
             Console.WriteLine("\n" + Name);
             Console.WriteLine("Your tricks:");

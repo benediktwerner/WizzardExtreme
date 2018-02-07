@@ -1,13 +1,13 @@
-﻿using WizzardExtreme.Game;
+﻿using System.Linq;
 
 namespace WizzardExtreme.Replay
 {
     public class Replay
     {
-        public int TurnIndex { get; private set; }
-        public int NextPlayer { get; private set; }
-        public CardStack Stack { get; private set; }
-        public Player[] Players { get; private set; }
+        public int TurnIndex;
+        public int NextPlayer;
+        public CardStack Stack;
+        public Player[] Players;
 
         private GameLog log;
         private Turn currentTurn;
@@ -27,23 +27,14 @@ namespace WizzardExtreme.Replay
             currentTurn = log.Turns[turn];
             NextPlayer = currentTurn.StartingPlayer;
 
-            Players = new Player[log.PlayerCount];
-            for (int i = 0; i < Players.Length; i++)
-            {
-                Player p = log.Players[i];
-                Players[i] = new Player(
-                        p.Name,
-                        new CardStack(p.Hand),
-                        new ColorCounter(p.Tricks));
-            }
+            Players = log.Players.Select(p => new Player(p)).ToArray();
 
             foreach (Turn t in log.Turns.GetRange(0, turn))
             {
                 for (int i = 0; i < log.PlayerCount; i++)
-                {
                     Players[i].Hand.Remove(t.Cards[i]);
-                }
-                Players[t.WinningPlayer].ProcessTrick(t.Trick);
+                
+                Players[t.WinningPlayer].Tricks[t.Trick] += (t.Trick == Color.Black) ? +1 : -1;
             }
         }
 
@@ -60,7 +51,7 @@ namespace WizzardExtreme.Replay
                 }
                 else
                 {
-                    Players[currentTurn.WinningPlayer].ProcessTrick(currentTurn.Trick);
+                    Players[currentTurn.WinningPlayer].Tricks[currentTurn.Trick] += (currentTurn.Trick == Color.Black) ? +1 : -1;
                     tricksUpdated = true;
                 }
             }

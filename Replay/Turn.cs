@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
-using WizzardExtreme.Game;
 
 namespace WizzardExtreme.Replay
 {
     public class Turn
     {
-        public int StartingPlayer { get; set; }
-        public int WinningPlayer { get; set; }
-        public Color Trick { get; set; }
-        public Card[] Cards { get; set; }
+        public int StartingPlayer;
+        public int WinningPlayer;
+        public Color Trick;
+        public Card[] Cards;
 
         public Turn(int startingPlayer, int playerCount)
         {

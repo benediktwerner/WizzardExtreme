@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using WizzardExtreme.Game;
 
 namespace WizzardExtreme.Replay
 {
@@ -17,18 +16,13 @@ namespace WizzardExtreme.Replay
             Tricks = tricks;
         }
 
-        public Player(Game.Player player)
+        public Player(Player player) : this(player.Name, new CardStack(player.Hand), new ColorCounter(player.Tricks)) { }
+
+        public Player(WizzardExtreme.Player player)
         {
             Name = player.Name;
             Hand = new CardStack(player.Hand);
             Tricks = new ColorCounter(player.Tricks);
-        }
-
-        public void ProcessTrick(Color color)
-        {
-            if (color == Color.Black)
-                Tricks[Color.Black]++;
-            else Tricks[color]++;
         }
     }
 }

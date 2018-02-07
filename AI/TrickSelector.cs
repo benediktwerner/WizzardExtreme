@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WizzardExtreme.Game;
 
 namespace WizzardExtreme.AI
 {

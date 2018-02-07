@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WizzardExtreme.Game;
 
 namespace WizzardExtreme.AI
 {
@@ -7,14 +6,13 @@ namespace WizzardExtreme.AI
     {
         internal Player Player { get; set; }
 
-        public abstract Card RequestCard(Color baseColor, Card winningCard);
+        public abstract Card RequestCard(Color? baseColor, Card winningCard);
 
-        /**
-         * Always removes the first possible trick
-         * Usually this should be WHITE > RED > COLOR
-         */
-        public Color SelectTrickToRemove(IList<Color> trickColors)
+        public virtual Color SelectTrickToRemove(IList<Color> trickColors)
         {
+            // Default implementation
+            // Always removes the first possible trick
+            // Usually this should be WHITE > RED > COLOR
             return trickColors[0];
         }
     }

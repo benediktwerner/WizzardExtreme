@@ -1,20 +1,20 @@
-﻿using WizzardExtreme.Game;
+﻿using System;
 
 namespace WizzardExtreme.Replay
 {
     public class GameRecorder
     {
         private GameLog log;
-        private Game.Game game;
+        private Game game;
         private Turn currentTurn;
 
-        public void StartRecording(Game.Game game)
+        public void StartRecording(Game game)
         {
             game.CardPlayed += OnCardPlayed;
             game.RoundFinished += OnRoundFinished;
 
             this.game = game;
-            log = new GameLog(game.NextPlayer, game.PlayerCount, game.Players);
+            log = new GameLog(game.NextPlayer, game.Players.Length, game.Players);
             currentTurn = new Turn(log.StartingPlayer, log.PlayerCount);
         }
 
@@ -33,7 +33,7 @@ namespace WizzardExtreme.Replay
         {
             currentTurn.WinningPlayer = winningPlayerId;
             currentTurn.Trick = trickRemoved;
-            log.AddTurn(currentTurn);
+            log.Turns.Add(currentTurn);
             currentTurn = new Turn(winningPlayerId, log.PlayerCount);
         }
 

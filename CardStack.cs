@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WizzardExtreme.Game
+namespace WizzardExtreme
 {
     public class CardStack : List<Card>
     {
@@ -42,7 +42,7 @@ namespace WizzardExtreme.Game
         public static CardStack GetCompleteStack(int maxNumber)
         {
             CardStack stack = new CardStack();
-            foreach (var color in Color.CardColors)
+            foreach (var color in ColorHelper.CardColors)
                 for (int i = 1; i <= maxNumber; i++)
                     stack.Add(new Card(i, color));
             return stack;
